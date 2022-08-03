@@ -16,7 +16,8 @@
 			"@utils/*": ["./src/utils/*"],
 			"@components/*": ["./src/components/*"],
 			"@models": ["./src/models/models.d.ts"],
-			"@assets/*": ["./src/assets/*"]
+			"@assets/*": ["./src/assets/*"],
+			"@stores/*": ["./src/stores/*"]
 		}
 	}
 }

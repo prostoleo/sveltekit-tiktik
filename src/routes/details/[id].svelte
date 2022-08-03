@@ -1,24 +1,12 @@
 <script lang="ts">
 	import type { IPost, ICommentData, ILikeData } from '@models';
 	import LikesButton from '@components/details/LikesButton.svelte';
+	import { user } from '@stores/user';
 	export let post: IPost;
-	// console.log('post: ', post);
-	// import { useUserStore } from '~~/store/user';
 
-	// console.log('videoId: ', videoId);
-	// const detailQuery = postDetailQuery(videoId.value);
-	// const userStore = useUserStore();
-
-	/* const {
-		data: postDetails,
-		pending,
-		refresh
-	}: {
-		data: Ref<IPost>;
-		pending: Ref<boolean>;
-		refresh: () => Promise<void>;
-		error: Ref<any>;
-	} = await useAsyncData('singlePost', () => sanity.fetch(detailQuery).then((data) => data[0])); */
+	let currentPost = post;
+	// $: currentPost = post;
+	$: console.log('currentPost: ', currentPost);
 
 	let videoRef: HTMLVideoElement | null = null;
 	let playing = false;
@@ -36,51 +24,32 @@
 		}
 	}
 
-	/* watch([post, isVideoMuted], () => {
-		if (videoRef?.value) {
-			videoRef.value.muted = isVideoMuted.value;
-		}
-	}); */
-
-	/* watch(
-		// route.params,
-		videoId,
-		(newVal, oldVal) => {
-			// console.log({ newVal, oldVal });
-			// if (newVal?.id && newVal?.id !== oldVal?.id) {
-			if (newVal && newVal !== oldVal) {
-				refresh();
-			}
-		},
-		{
-			immediate: true,
-		}
-	); */
-
-	async function handleLike(event: CustomEvent<{ alreadyLiked: boolean }>) {
+	async function handleLike(toggleLike: CustomEvent<{ alreadyLiked: boolean }>) {
 		console.log(`handleLike func`);
-		/* try {
-			if (userStore.getUser) {
-				const rawUser = toRaw(userStore.getUser);
+		try {
+			if ($user) {
+				const like = toggleLike.detail.alreadyLiked;
+				console.log('like: ', like);
+				// const rawUser = toRaw(userStore.getUser);
 				// console.log('rawUser: ', rawUser);
 
 				const likeData: ILikeData = {
-					userId: rawUser._id,
-					postId: post.value._id,
-					like: unref(like),
+					userId: $user._id,
+					postId: currentPost._id,
+					like: like
 				};
 
-				const { data, error } = await useFetch(`/api/like`, {
+				const data = await fetch(`/api/like`, {
 					method: 'PUT',
-					body: {
-						likeData: likeData,
-					},
-				});
-				// console.log('data: ', data);
+					body: JSON.stringify({
+						likeData: likeData
+					})
+				}).then((response) => response.json());
+				console.log('data: ', data);
 
-				post.value = { ...post.value, likes: data.value.body.likes };
+				currentPost = { ...currentPost, likes: data.data.likes };
 			}
-		} catch (error) {} */
+		} catch (error) {}
 	}
 
 	let isPostingComment = false;
@@ -118,7 +87,7 @@
 </script>
 
 <div>
-	{#if !post}
+	{#if !currentPost}
 		<!-- content here -->
 		<div>Oopsy</div>
 	{:else}
@@ -126,7 +95,7 @@
 		<div
 			class="flex w-full h-full absolute left-0 top-0 bottom-0 bg-white flex-wrap lg:flex-nowrap"
 		>
-			<!-- <pre>{{ postDetails }}</pre> -->
+			<!-- <pre>{{ currentPostDetails }}</pre> -->
 			<div class="relative flex-2 w-full lg:w-75/100 flex justify-center items-center">
 				<div class="absolute inset-0 bg-blurred-img-my bg-no-repeat bg-cover filter blur-lg" />
 				<a
@@ -141,7 +110,7 @@
 							bind:this={videoRef}
 							class="h-full cursor-pointer"
 							loop
-							src={post?.video?.asset?.url}
+							src={currentPost?.video?.asset?.url}
 							on:click={onVideoClick}
 						/>
 					</div>
@@ -173,35 +142,35 @@
 				<div class="mt-5 lg:mt-20">
 					<div class="flex gap-3 p-2 cursor-pointer font-semibold rounded">
 						<div class="w-12 h-12 md:w-16 md:h-16">
-							<a class="block w-full h-full" href={`/profile/${post.postedBy._id}`}>
+							<a class="block w-full h-full" href={`/profile/${currentPost.postedBy._id}`}>
 								<img
-									src={post.postedBy.image}
+									src={currentPost.postedBy.image}
 									class="block w-full h-full object-cover rounded-full aspect-square"
-									alt={`photo of ${post.postedBy.userName}'s profile`}
+									alt={`photo of ${currentPost.postedBy.userName}'s profile`}
 								/>
 							</a>
 						</div>
 						<div>
-							<a href={`/profile/${post.postedBy._id}`}>
+							<a href={`/profile/${currentPost.postedBy._id}`}>
 								<div class="flex flex-col gap-2 mt-2">
 									<p class="flex gap-2 items-center font-bold text-primary md:text-md">
-										{post.postedBy.userName}
+										{currentPost.postedBy.userName}
 									</p>
 									<p class="capitalize font-medium text-xs text-gray-500 hidden md:(block)">
-										{post.postedBy.userName}
+										{currentPost.postedBy.userName}
 									</p>
 								</div>
 							</a>
 						</div>
 					</div>
 
-					<p class="px-10 text-gray-600 text-lg">{post.caption}</p>
+					<p class="px-10 text-gray-600 text-lg">{currentPost.caption}</p>
 
 					<div class="mt-5 px-10">
-						<!-- {#if userStore?.getUser?._id} -->
 						<!-- content here -->
-						<LikesButton likes={post.likes} on:toggle-like={handleLike} />
-						<!-- {/if} -->
+						{#if $user}
+							<LikesButton likes={currentPost.likes} on:toggle-like={handleLike} />
+						{/if}
 
 						<!-- <Comments/> -->
 					</div>

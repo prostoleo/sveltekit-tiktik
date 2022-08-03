@@ -42,7 +42,7 @@
 	} */
 
 	function handleChangeCookie(userInfo) {
-		console.log('userInfo - handleChangeCookie: ', userInfo);
+		// console.log('userInfo - handleChangeCookie: ', userInfo);
 		if (userInfo) {
 			// console.log(`newVal truthy - setUser`);
 			setUserFromCookieUser(JSON.parse(userInfo));
@@ -190,7 +190,7 @@
 		// console.log(decodeCredentials);
 		// console.log(google.decodeCredentials);
 		console.log('client: ', client); */
-		console.log('google: ', google);
+		// console.log('google: ', google);
 
 		function renderGoogleBtn() {
 			//* https://developers.google.com/identity/gsi/web/guides/display-button - google Identity

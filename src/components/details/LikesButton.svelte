@@ -1,8 +1,9 @@
 <script setup lang="ts">
+	export let likes: ILike[];
 	import type { ILike } from '@models';
 	import { createEventDispatcher } from 'svelte';
+	import { user } from '@stores/user';
 	// import { useUserStore } from '~~/store/user';
-	export let likes: ILike[];
 	// console.log('likes: ', likes);
 	const dispatch = createEventDispatcher();
 	// const emit = defineEmits(['toggle-like']);
@@ -12,10 +13,32 @@
 
 	function handleLike() {
 		alreadyLiked = !alreadyLiked;
-		dispatch('toggle-like', alreadyLiked);
+		dispatch('toggle-like', { alreadyLiked });
 	}
 
-	/* $: filterLikes: <ILike | ILike[]> = (() => {
+	$: filterLikes = likes?.filter((item) => item?._ref === $user._id);
+
+	$: watchLikes(likes);
+	$: watchLikes(filterLikes);
+	$: likesLength = likes?.length || 0;
+
+	$: console.log('likesLength: ', likesLength);
+	/* $: {
+		if (filterLikes?.length > 0) {
+			alreadyLiked = true;
+		} else {
+			alreadyLiked = false;
+		}
+	} */
+
+	function watchLikes(likes) {
+		if (filterLikes?.length > 0) {
+			alreadyLiked = true;
+		} else {
+			alreadyLiked = false;
+		}
+	}
+	/* $: filterLikes as <ILike | ILike[]> = (() => {
 		const arr: ILike | ILike[] = likes?.filter(
 			(item) => item?._ref === userStore?.getUser?._id
 		);
@@ -37,19 +60,19 @@
 		{#if alreadyLiked}
 			<div>
 				<div
-					class="i-mdi-heart-multiple bg-primary rounded-full text-lg text-accent block aspect-square !leading-none p-2 md:text-2xl md:p-4"
+					class="rounded-full text-lg text-accent block aspect-square !leading-none p-2 md:text-2xl md:p-4 i-mdi-heart-multiple"
 					on:click={handleLike}
 				/>
 			</div>
 		{:else}
 			<div>
 				<div
-					class="i-mdi-heart-multiple-outline bg-primary rounded-full text-lg text-accent block aspect-square !leading-none p-2 md:text-2xl md:p-4"
+					class="rounded-full text-lg text-accent block aspect-square !leading-none p-2 md:text-2xl md:p-4 i-mdi-heart-multiple-outline"
 					on:click={handleLike}
 				/>
 			</div>
 		{/if}
 
-		<p class="font-semibold">{likes?.length ?? 0}</p>
+		<p class="font-semibold">{likesLength}</p>
 	</div>
 </div>

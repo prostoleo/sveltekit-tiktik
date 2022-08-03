@@ -90,7 +90,8 @@ const config = {
 			'@components': path.resolve('./src/components'),
 			// '@lib': path.resolve('./src/lib'),
 			'@models': path.resolve('./src/models/models.d.ts'),
-			'@utils': path.resolve('./src/utils')
+			'@utils': path.resolve('./src/utils'),
+			'@stores': path.resolve('./src/stores')
 		}
 	}
 };
