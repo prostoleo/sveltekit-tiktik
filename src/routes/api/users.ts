@@ -7,7 +7,7 @@ import { useSanityClient } from '@utils/sanityClient';
 export async function GET() {
 	const sanity = useSanityClient();
 	const allUsers = await sanity.fetch(allUsersQuery());
-	console.log('allUsers: ', allUsers);
+	// console.log('allUsers: ', allUsers);
 
 	return {
 		status: 200,

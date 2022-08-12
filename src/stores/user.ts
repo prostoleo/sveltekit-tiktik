@@ -33,7 +33,7 @@ export interface IUserData {
 }
 
 export const user = writable(null) as Writable<IUser | null>;
-export const allUsers = writable([]) as Writable<IUser[] | []>;
+export const allUsers = writable(null) as Writable<IUser[] | null>;
 export const isLogin = writable(false) as Writable<boolean>;
 
 //=============
@@ -96,12 +96,14 @@ export function setIsLoginFalse() {
 export async function fetchAllUsers() {
 	try {
 		const data = await fetch(`/api/users`).then((res) => res.json());
+		console.log('allUsers - store: ', data);
+		// console.log('allUsers - store: ', data.allUsers);
 
 		if (!data) {
 			throw new Error(`failed to fetch all users`);
 		}
 
-		allUsers.set(data.body);
+		allUsers.set(data.allUsers);
 	} catch (error) {
 		console.log('error: ', error);
 		throw error;

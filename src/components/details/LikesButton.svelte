@@ -22,7 +22,7 @@
 	$: watchLikes(filterLikes);
 	$: likesLength = likes?.length || 0;
 
-	$: console.log('likesLength: ', likesLength);
+	// $: console.log('likesLength: ', likesLength);
 	/* $: {
 		if (filterLikes?.length > 0) {
 			alreadyLiked = true;

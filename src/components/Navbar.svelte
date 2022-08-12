@@ -53,7 +53,7 @@
 	}
 
 	function setCookie(userInfo) {
-		console.log(`setCookie`);
+		// console.log(`setCookie`);
 		Cookies.set(import.meta.env.VITE_USER_KEY, JSON.stringify(userInfo));
 
 		/* if (browser) {
@@ -62,7 +62,7 @@
 	}
 
 	function clearCookie() {
-		console.log(`clearCookie`);
+		// console.log(`clearCookie`);
 		Cookies.remove(import.meta.env.VITE_USER_KEY);
 		/* if (browser) {
 			localStorage.removeItem(import.meta.env.VITE_USER_KEY);
@@ -97,14 +97,14 @@
 
 		try {
 			const user = createOrGetUser(googleResponse);
-			console.log('user - handleLogin: ', user);
+			// console.log('user - handleLogin: ', user);
 			// console.log('rawUser: ', rawUser);
 
 			const response = await fetch(`/api/auth`, {
 				method: 'POST',
 				body: JSON.stringify(user)
 			}).then((res) => res.json());
-			console.log('response: ', response);
+			// console.log('response: ', response);
 			// console.log('data: ', data);
 
 			if (!response.ok) {
@@ -114,7 +114,7 @@
 			// userStore.setIsLoginTrue();
 			// setUserCookie(rawUser);
 			// userCookie.value = rawUser;
-			console.log(`before set Cookie`);
+			// console.log(`before set Cookie`);
 			setCookie(user);
 		} catch (error) {
 			setIsLoginFalse();
@@ -215,7 +215,7 @@
 		handleGoogleLogin();
 
 		if (!$user) {
-			console.log('logout user');
+			// console.log('logout user');
 			setTimeout(renderGoogleBtn, 0);
 		}
 	}

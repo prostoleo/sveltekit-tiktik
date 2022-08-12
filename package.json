@@ -46,6 +46,7 @@
 	"type": "module",
 	"dependencies": {
 		"@sanity/client": "^3.3.2",
+		"@sveltestack/svelte-query": "^1.6.0",
 		"@types/js-cookie": "^3.0.2",
 		"@unocss/reset": "^0.45.1",
 		"js-cookie": "^3.0.1",

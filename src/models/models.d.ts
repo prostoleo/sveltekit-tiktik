@@ -5,7 +5,7 @@ export interface IPostedBy {
 }
 
 export interface IComment {
-	key: string;
+	_key: string;
 	comment: string;
 	postedBy: IPostedBy;
 }

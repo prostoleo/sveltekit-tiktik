@@ -1,12 +1,15 @@
 <script lang="ts">
 	import type { IPost, ICommentData, ILikeData } from '@models';
+	// import type { useQuery } from '@sveltestack/svelte-query';
+	// import { useQuery } from '@sveltestack/svelte-query';
 	import LikesButton from '@components/details/LikesButton.svelte';
+	import Comments from '@components/details/Comments.svelte';
 	import { user } from '@stores/user';
 	export let post: IPost;
 
 	let currentPost = post;
 	// $: currentPost = post;
-	$: console.log('currentPost: ', currentPost);
+	// $: console.log('currentPost: ', currentPost);
 
 	let videoRef: HTMLVideoElement | null = null;
 	let playing = false;
@@ -25,11 +28,11 @@
 	}
 
 	async function handleLike(toggleLike: CustomEvent<{ alreadyLiked: boolean }>) {
-		console.log(`handleLike func`);
+		// console.log(`handleLike func`);
 		try {
 			if ($user) {
 				const like = toggleLike.detail.alreadyLiked;
-				console.log('like: ', like);
+				// console.log('like: ', like);
 				// const rawUser = toRaw(userStore.getUser);
 				// console.log('rawUser: ', rawUser);
 
@@ -45,7 +48,7 @@
 						likeData: likeData
 					})
 				}).then((response) => response.json());
-				console.log('data: ', data);
+				// console.log('data: ', data);
 
 				currentPost = { ...currentPost, likes: data.data.likes };
 			}
@@ -54,36 +57,59 @@
 
 	let isPostingComment = false;
 
-	/* async function addComment(newComment: string) {
+	async function addComment(event: CustomEvent<{ newComment: string }>) {
 		try {
-			if (userStore.getUser && newComment) {
-				isPostingComment.value = true;
-				const rawUser = toRaw(userStore.getUser);
+			const commentToAdd = event.detail.newComment;
+			if ($user && commentToAdd) {
+				isPostingComment = true;
 
 				const commentData: ICommentData = {
-					userId: rawUser._id,
-					comment: newComment,
+					userId: $user._id,
+					comment: commentToAdd
 				};
 
-				const { data, error } = await useFetch(`/api/post/${post.value._id}`, {
+				/* const { data, error } = await useFetch(`/api/post/${post.value._id}`, {
 					method: 'PUT',
 					body: {
 						// likeData: likeData,
 						commentData,
 					},
-				});
+				}); */
+				/* const queryResult = useQuery('addComment', () =>
+					fetch(`/api/post/${currentPost._id}`, {
+						method: 'PUT',
+						body: JSON.stringify({
+							commentData: commentData
+						})
+					})
+				);
 
-				if (error.value) {
-					throw new Error(error.value);
+				if ($queryResult.isError) {
+					throw new Error($queryResult?.error?.message || `something went wrong`);
 				}
 
-				post.value = { ...post.value, comments: data?.value?.body.comments };
-				isPostingComment.value = false;
+				currentPost = { ...currentPost, comments: $queryResult.data?.body?.comments };
+				isPostingComment = false; */
+
+				const data = await fetch(`/api/post/${currentPost._id}`, {
+					method: 'PUT',
+					body: JSON.stringify({
+						commentData: commentData
+					})
+				}).then((response) => response.json());
+				console.log('data: ', data);
+
+				if (!data.ok) {
+					throw new Error(data?.error?.message || `something went wrong`);
+				}
+
+				currentPost = { ...currentPost, comments: data?.data?.comments };
+				isPostingComment = false;
 			}
 		} catch (error) {
 			console.log('error: ', error);
 		}
-	} */
+	}
 </script>
 
 <div>
@@ -174,11 +200,7 @@
 
 						<!-- <Comments/> -->
 					</div>
-					<!-- <DetailsComments
-						@add-comment="addComment"
-						:is-posting-comment="isPostingComment"
-						:comments="post.comments"
-					/> -->
+					<Comments on:add-comment={addComment} {isPostingComment} comments={post.comments} />
 					<!-- @pointer -->
 					<!-- :comment="comment" -->
 				</div>

@@ -4,7 +4,7 @@ import { useSanityClient } from '@utils/sanityClient';
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function GET({ request, params }) {
-	console.log('params: ', params);
+	// console.log('params: ', params);
 
 	const sanity = useSanityClient();
 	// console.log('sanity: ', sanity);
@@ -12,7 +12,7 @@ export async function GET({ request, params }) {
 
 	// const topicPosts = await sanity.fetch(topicPostsQuery(topic));
 	const post = await sanity.fetch(postDetailQuery(params.id));
-	console.log('post: ', post);
+	// console.log('post: ', post);
 	// console.log('posts: ', posts);
 
 	return {

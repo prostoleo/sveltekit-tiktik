@@ -301,6 +301,11 @@
     "magic-string" "^0.26.2"
     "svelte-hmr" "^0.14.12"
 
+"@sveltestack/svelte-query@^1.6.0":
+  "integrity" "sha512-C0wWuh6av1zu3Pzwrg6EQmX3BhDZQ4gMAdYu6Tfv4bjbEZTB00uEDz52z92IZdONh+iUKuyo0xRZ2e16k2Xifg=="
+  "resolved" "https://registry.npmjs.org/@sveltestack/svelte-query/-/svelte-query-1.6.0.tgz"
+  "version" "1.6.0"
+
 "@types/js-cookie@^3.0.2":
   "integrity" "sha512-6+0ekgfusHftJNYpihfkMu8BWdeHs9EOJuGcSofErjstGPfPGEu9yTu4t460lTzzAMl2cM5zngQJqPMHbbnvYA=="
   "resolved" "https://registry.npmjs.org/@types/js-cookie/-/js-cookie-3.0.2.tgz"

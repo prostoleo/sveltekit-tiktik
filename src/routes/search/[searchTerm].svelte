@@ -119,7 +119,11 @@
           </div>
         </div>
       </a>
+
     {/each}
+    {/if}
+
+  
     
 		{:else}
     <NoResults
