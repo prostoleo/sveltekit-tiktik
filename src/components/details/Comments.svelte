@@ -1,11 +1,29 @@
+<!-- <script context="module" lang="ts">
+	// your script goes here
+	import { fetchAllUsers, allUsers as all } from '@stores/user';
+
+	export async function loadAllUsers() {
+		console.log(`loadAllUsers`);
+		if (all) {
+			console.log('all: ', all);
+			return;
+		}
+		await fetchAllUsers();
+		console.log('all: ', all);
+	}
+
+	loadAllUsers();
+</script> -->
 <script lang="ts">
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { browser } from '$app/env';
 
 	import type { IComment, IPostedBy } from '@models';
 
+	// fetchAllUsers
 	import { allUsers, fetchAllUsers, user } from '@stores/user';
 	import VideoNoResults from '@components/video/NoResults.svelte';
+	import Loader from '@components/Loader.svelte';
 
 	export let isPostingComment: boolean;
 	export let comments: IComment[];
@@ -55,7 +73,13 @@
 		class="border-t-2 border-b-2 border-gray-200 bg-light-300 px-2 md:px-10 pb-28 lg:pb-0 overflow-y-scroll"
 	>
 		<div class="h-72 max-h-[75vh] lg:h-lg lg:max-h-full">
-			{#if allUsersLoaded && comments && comments?.length}
+			{#if !allUsersLoaded}
+				<!-- content here -->
+				<div class="w-full h-full flex justify-center p-5">
+					<Loader />
+				</div>
+			{:else if allUsersLoaded && comments && comments?.length}
+				<!-- {#if comments && comments?.length} -->
 				{#each comments as item (item)}
 					{#each $allUsers as singleUser (singleUser._id)}
 						{#if singleUser._id === item.postedBy._id || item.postedBy?._ref}

@@ -96,8 +96,8 @@ export function setIsLoginFalse() {
 export async function fetchAllUsers() {
 	try {
 		const data = await fetch(`/api/users`).then((res) => res.json());
-		console.log('allUsers - store: ', data);
-		// console.log('allUsers - store: ', data.allUsers);
+		// console.log('allUsers - store: ', data);
+		console.log('allUsers - store: ', data.allUsers);
 
 		if (!data) {
 			throw new Error(`failed to fetch all users`);

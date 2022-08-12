@@ -68,29 +68,6 @@
 					comment: commentToAdd
 				};
 
-				/* const { data, error } = await useFetch(`/api/post/${post.value._id}`, {
-					method: 'PUT',
-					body: {
-						// likeData: likeData,
-						commentData,
-					},
-				}); */
-				/* const queryResult = useQuery('addComment', () =>
-					fetch(`/api/post/${currentPost._id}`, {
-						method: 'PUT',
-						body: JSON.stringify({
-							commentData: commentData
-						})
-					})
-				);
-
-				if ($queryResult.isError) {
-					throw new Error($queryResult?.error?.message || `something went wrong`);
-				}
-
-				currentPost = { ...currentPost, comments: $queryResult.data?.body?.comments };
-				isPostingComment = false; */
-
 				const data = await fetch(`/api/post/${currentPost._id}`, {
 					method: 'PUT',
 					body: JSON.stringify({
