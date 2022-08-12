@@ -12,6 +12,7 @@
 		setUserFromCookieUser,
 		clearUser
 	} from '../stores/user';
+	import { goto } from '$app/navigation';
 
 	// let user = false;
 	$: userCookie = Cookies.get(import.meta.env.VITE_USER_KEY);
@@ -252,6 +253,15 @@
 			google?.accounts.id.prompt(); // also display the One Tap dialog
 		};
 	} */
+
+	let searchQuery = '';
+
+	function handleSearch() {
+		if (searchQuery.length > 0) {
+			goto(`/search/${searchQuery}`);
+			searchQuery = '';
+		}
+	}
 </script>
 
 <svelte:head>
@@ -271,10 +281,13 @@
 	<!-- <i class="bi bi-archive"></i> -->
 	<div class="relative">
 		<!-- on:submit={handleSearch} -->
-		<form class="absolute md:static top-10 -left-20 bg-white inline-flex items-center">
-			<!-- bind:value={searchQuery} -->
+		<form
+			class="absolute md:static top-10 -left-20 bg-white inline-flex items-center"
+			on:submit|preventDefault={handleSearch}
+		>
 			<input
 				type="text"
+				bind:value={searchQuery}
 				class="bg-primary-bg p-3 font-medium border-2 border-gray-100 rounded-lg focus:border-accent/50 focus:outline-none md:top-0"
 				placeholder="Search accounts and videos"
 			/>
