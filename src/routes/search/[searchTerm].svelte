@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { IPost } from '@models';
-	import { user, allUsers, fetchAllUsers } from '@stores/user';
+	import { allUsers, fetchAllUsers } from '@stores/user';
 	import type { IUser } from '@stores/user';
 
 	import VideoCard from '@components/video/VideoCard.svelte';
