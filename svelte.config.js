@@ -17,11 +17,11 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		// adapter: adapter()
-		adapter: netlifyAdapter({
+		adapter: autoAdapter()
+		/* adapter: netlifyAdapter({
 			edge: true,
 			split: false
-		})
+		}) */
 	}
 
 	/* vite: {
