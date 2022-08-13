@@ -12,7 +12,7 @@
 <div class="website-wrapper">
 	<div class="m-auto overflow-hidden h-screen xl:w-7xl">
 		<Navbar />
-		<main class="flex gap-6 md:(gap-20)">
+		<main class="flex gap-6 md:gap-20">
 			<div class="h-[90vh] overflow-hidden overflow-y-auto">
 				<Sidebar />
 			</div>

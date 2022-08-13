@@ -46,12 +46,12 @@
 		</div>
 		<div class="flex flex-col justify-center">
 			<p
-				class="flex gap-1 items-center justify-center font-bold lowercase md:(text-3xl tracking-wider)"
+				class="flex gap-1 items-center justify-center font-bold lowercase md:text-3xl md:tracking-wider"
 			>
 				{user.userName.replaceAll(` `, ``)}
 				<!-- <span></span> -->
 			</p>
-			<p class="capitalize text-gray-400 text-xs md:(text-xl)">
+			<p class="capitalize text-gray-400 text-xs md:text-xl">
 				{user.userName}
 			</p>
 		</div>

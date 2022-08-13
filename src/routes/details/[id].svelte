@@ -159,7 +159,7 @@
 									<p class="flex gap-2 items-center font-bold text-primary md:text-md">
 										{currentPost.postedBy.userName}
 									</p>
-									<p class="capitalize font-medium text-xs text-gray-500 hidden md:(block)">
+									<p class="capitalize font-medium text-xs text-gray-500 hidden md:block">
 										{currentPost.postedBy.userName}
 									</p>
 								</div>
