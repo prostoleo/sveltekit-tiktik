@@ -3,11 +3,20 @@
 	import 'uno.css';
 	import '../assets/globals.css';
 
-	import Sidebar from '../components/Sidebar.svelte';
-	import Navbar from '../components/Navbar.svelte';
+	import Sidebar from '@components/Sidebar.svelte';
+	import Navbar from '@components/Navbar.svelte';
 
 	// Navbar
 </script>
+
+<svelte:head>
+	<title>Tiktik | social for short videos</title>
+	<link rel="icon" href="favicon.png" />
+	<meta
+		name="description"
+		content="TikTik: здесь рождаются тренды. Миллионы коротких видео на веб-сайте."
+	/>
+</svelte:head>
 
 <div class="website-wrapper">
 	<div class="m-auto overflow-hidden h-screen xl:w-7xl">
