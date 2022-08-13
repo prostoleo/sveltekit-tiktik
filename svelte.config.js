@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-auto';
+import autoAdapter from '@sveltejs/adapter-auto';
 import netlifyAdapter from '@sveltejs/adapter-netlify';
 import preprocess from 'svelte-preprocess';
 // import windi from 'svelte-windicss-preprocess';
