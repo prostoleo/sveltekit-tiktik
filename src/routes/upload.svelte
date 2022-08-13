@@ -102,6 +102,7 @@
 					post: post
 				})
 			});
+			console.log('res: ', res);
 
 			// sanity.create
 			// console.log('data: ', data);
