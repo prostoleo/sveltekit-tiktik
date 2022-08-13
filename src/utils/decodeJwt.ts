@@ -1,6 +1,4 @@
 export default function decodeJwt(token: string) {
-	console.log('token: ', token);
-	console.log('typeof token: ', typeof token);
 	if (!token) {
 		return null;
 	}

@@ -1,7 +1,6 @@
 import type { IPost } from '@models';
 import { useSanityClient } from '@utils/sanityClient';
 import { v4 as uuidv4 } from 'uuid';
-// import { page } from '$app/stores';
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function PUT({ request }) {
@@ -9,7 +8,6 @@ export async function PUT({ request }) {
 		const body = await request.json();
 		const { likeData } = body;
 		const { userId, postId, like } = likeData;
-		console.log({ userId, postId, like });
 		const sanity = useSanityClient();
 		const data: IPost = like
 			? await sanity
@@ -26,7 +24,6 @@ export async function PUT({ request }) {
 					.patch(postId)
 					.unset([`likes[_ref=="${userId}"]`])
 					.commit();
-		console.log('data.likes: ', data.likes);
 
 		return {
 			status: 200,
@@ -35,7 +32,6 @@ export async function PUT({ request }) {
 			},
 			body: {
 				ok: true,
-				// number: Math.random(),
 				data
 			}
 		};

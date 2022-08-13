@@ -5,8 +5,6 @@
 
 	import Sidebar from '@components/Sidebar.svelte';
 	import Navbar from '@components/Navbar.svelte';
-
-	// Navbar
 </script>
 
 <svelte:head>

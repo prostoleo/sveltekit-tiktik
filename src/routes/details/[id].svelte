@@ -1,23 +1,17 @@
 <script lang="ts">
 	import type { IPost, ICommentData, ILikeData } from '@models';
-	// import type { useQuery } from '@sveltestack/svelte-query';
-	// import { useQuery } from '@sveltestack/svelte-query';
 	import LikesButton from '@components/details/LikesButton.svelte';
 	import Comments from '@components/details/Comments.svelte';
 	import { user } from '@stores/user';
 	export let post: IPost;
 
 	let currentPost = post;
-	// $: currentPost = post;
-	// $: console.log('currentPost: ', currentPost);
 
 	let videoRef: HTMLVideoElement | null = null;
 	let playing = false;
 	let isVideoMuted = false;
 
 	function onVideoClick(): void {
-		// if (!process.client) return;
-
 		if (playing) {
 			videoRef.pause();
 			playing = false;
@@ -28,13 +22,9 @@
 	}
 
 	async function handleLike(toggleLike: CustomEvent<{ alreadyLiked: boolean }>) {
-		// console.log(`handleLike func`);
 		try {
 			if ($user) {
 				const like = toggleLike.detail.alreadyLiked;
-				// console.log('like: ', like);
-				// const rawUser = toRaw(userStore.getUser);
-				// console.log('rawUser: ', rawUser);
 
 				const likeData: ILikeData = {
 					userId: $user._id,
@@ -48,7 +38,6 @@
 						likeData: likeData
 					})
 				}).then((response) => response.json());
-				// console.log('data: ', data);
 
 				currentPost = { ...currentPost, likes: data.data.likes };
 			}
@@ -74,7 +63,6 @@
 						commentData: commentData
 					})
 				}).then((response) => response.json());
-				console.log('data: ', data);
 
 				if (!data.ok) {
 					throw new Error(data?.error?.message || `something went wrong`);

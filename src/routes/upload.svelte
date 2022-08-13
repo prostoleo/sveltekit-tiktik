@@ -6,9 +6,7 @@
 	import Loader from '@components/Loader.svelte';
 	import { goto } from '$app/navigation';
 
-	// const client = useSanityClient(config);
 	const sanity = useSanityClient();
-	// console.log('sanity: ', sanity.client.assets.upload);
 
 	let isLoading = false;
 	let videoAsset = <SanityAssetDocument | null>null;
@@ -19,44 +17,19 @@
 	let selectedCategory = topics[0].name;
 	let savingPost = false;
 
-	// $: console.log('selectedCategory: ', selectedCategory);
-
 	async function uploadVideo() {
 		try {
 			const selectedFile = inputFileEl?.files[0];
-			console.log('selectedFile: ', selectedFile);
 			const fileTypes = ['video/mp4', 'video/webm', 'video/ogg'];
 
 			if (fileTypes.includes(selectedFile.type)) {
-				console.log(`include`);
-				// client.assets
 				isLoading = true;
-				/* sanity.assets
-					.upload('file', selectedFile, {
-						contentType: selectedFile.type,
-						filename: selectedFile.name
-					})
-					.then((data) => {
-						console.log('data: ', data);
-						videoAsset = data;
-						isLoading = false;
-					}); */
 
 				const data = await sanity?.assets.upload('file', selectedFile);
-				console.log('data: ', data);
-				/* const data = await fetch(`/api/upload`, {
-					method: 'POST',
-					body: JSON.stringify({
-						selectedFile: selectedFile
-					})
-				}); */
-				// .then((res) => res.json());
-				console.log('data: ', data);
 
 				videoAsset = data;
 				isLoading = false;
 			} else {
-				// console.log(`error`);
 				isLoading = false;
 				wrongFileType = true;
 			}
@@ -73,9 +46,6 @@
 			}
 
 			savingPost = true;
-
-			// const userData = toRaw(userStore.getUser);
-			// console.log('userData: ', userData);
 
 			const post = {
 				_type: 'post',
@@ -94,7 +64,6 @@
 				},
 				topic: selectedCategory
 			};
-			console.log('post: ', post);
 
 			const res = await fetch(`/api/post`, {
 				method: 'POST',
@@ -102,16 +71,11 @@
 					post: post
 				})
 			});
-			console.log('res: ', res);
-
-			// sanity.create
-			// console.log('data: ', data);
 
 			if (!res.ok) {
 				throw new Error(res?.error?.message || 'oops, somethins went wrong');
 			}
 
-			// router.push('/');
 			goto('/');
 		} catch (error) {
 			console.log(error);

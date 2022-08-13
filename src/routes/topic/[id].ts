@@ -1,32 +1,10 @@
 import { topicPostsQuery } from '@utils/queries';
 import { useSanityClient } from '@utils/sanityClient';
-// import { page } from '$app/stores';
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
-export async function GET({ request, params }) {
-	console.log('params: ', params);
-
-	// console.log('request: ', request);
-	// // useSanityClientconsole.log();
-	// console.log('request.url: ', request.url);
-	// console.log('request.url.searchParams: ', request.url.searchParams);
-
-	/* const query = new URLSearchParams(requestData.url.search);
-	console.log('query: ', query);
-	// console.log('params: ', params);
-	const topic = query.get('topic');
-	console.log('topic: ', topic); */
-
-	// const topic = request.url.searchParams.get('topic');
-	// console.log('topic: ', topic);
-
+export async function GET({ params }) {
 	const sanity = useSanityClient();
-	// console.log('sanity: ', sanity);
-	// console.log('params.topic: ', params.topic);
-
-	// const topicPosts = await sanity.fetch(topicPostsQuery(topic));
 	const topicPosts = await sanity.fetch(topicPostsQuery(params.id));
-	// console.log('posts: ', posts);
 
 	return {
 		status: 200,
