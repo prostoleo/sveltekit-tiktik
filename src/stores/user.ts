@@ -59,7 +59,7 @@ export function createOrGetUser(response: IGoogleResponse): IUser {
 		userName: name,
 		image: picture
 	};
-	console.log('userSanity: ', userSanity);
+	// console.log('userSanity: ', userSanity);
 
 	user.set(userSanity);
 

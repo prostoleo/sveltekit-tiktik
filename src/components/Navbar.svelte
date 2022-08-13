@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type Cookie from 'js-cookie';
-	import type { IGoogleResponse } from '../stores/user';
+	import type { IGoogleResponse } from '@stores/user';
 	import Cookies from 'js-cookie';
 	import jwt_decode from 'jwt-decode';
 	// import decodeJwt from '@utils/decodeJwt';
@@ -11,8 +11,9 @@
 		setIsLoginFalse,
 		setUserFromCookieUser,
 		clearUser
-	} from '../stores/user';
+	} from '@stores/user';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
 	// let user = false;
 	$: userCookie = Cookies.get(import.meta.env.VITE_USER_KEY);
@@ -130,6 +131,9 @@
 		clearUser();
 		clearCookie();
 		// }
+		if ($page.url.pathname.includes('upload')) {
+			goto('/');
+		}
 	}
 
 	$: if (loaded) {
