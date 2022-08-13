@@ -102,6 +102,7 @@
 					post: post
 				})
 			});
+			console.log('res: ', res);
 
 			// sanity.create
 			// console.log('data: ', data);
@@ -201,7 +202,7 @@
 			<input
 				id="captionInput"
 				type="text"
-				v-model="caption"
+				bind:value={caption}
 				class="rounded outline-none border-2 border-gray-200 p-2"
 			/>
 			<label for="selectInput" class="font-medium">Choose a Category</label>

@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-auto';
+import autoAdapter from '@sveltejs/adapter-auto';
 import netlifyAdapter from '@sveltejs/adapter-netlify';
 import preprocess from 'svelte-preprocess';
 // import windi from 'svelte-windicss-preprocess';
@@ -17,11 +17,11 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		// adapter: adapter()
-		adapter: netlifyAdapter({
+		adapter: autoAdapter()
+		/* adapter: netlifyAdapter({
 			edge: true,
 			split: false
-		})
+		}) */
 	}
 
 	/* vite: {
